@@ -86,7 +86,7 @@ namespace NZWalks.API.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
         }
 
@@ -94,30 +94,37 @@ namespace NZWalks.API.Controllers
         [Route("{id:Guid}")]
         public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            //check if region is exists
-            var regionsDomainModel = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
-
-            if(regionsDomainModel == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                //check if region is exists
+                var regionsDomainModel = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+                if (regionsDomainModel == null)
+                {
+                    return NotFound();
+                }
+                //map Dto to Domain Model
+                regionsDomainModel.Code = updateRegionRequestDto.Code;
+                regionsDomainModel.Name = updateRegionRequestDto.Name;
+                regionsDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
+
+                _dbContext.SaveChanges();
+
+                //Convert DomainModel to Dto
+                var regionDto = new RegionDto
+                {
+                    Id = regionsDomainModel.Id,
+                    Code = regionsDomainModel.Code,
+                    Name = regionsDomainModel.Name,
+                    RegionImageUrl = regionsDomainModel.RegionImageUrl
+                };
+
+                return Ok(regionDto);
             }
-            //map Dto to Domain Model
-            regionsDomainModel.Code = updateRegionRequestDto.Code;
-            regionsDomainModel.Name = updateRegionRequestDto.Name   ;
-            regionsDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
-
-            _dbContext.SaveChanges();
-
-            //Convert DomainModel to Dto
-            var regionDto = new RegionDto
+            else
             {
-                Id = regionsDomainModel.Id,
-                Code = regionsDomainModel.Code,
-                Name = regionsDomainModel.Name,
-                RegionImageUrl = regionsDomainModel.RegionImageUrl
-            };
-
-            return Ok(regionDto);
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpDelete("{id}")]
