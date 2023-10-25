@@ -41,26 +41,29 @@ namespace NZWalks.API.Controllers
         [Route("{id:Guid}")]
         public IActionResult GetById([FromRoute] Guid id)
         {
-            var regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
-            if(regionDomain == null)
-            {
-                return NotFound();
-            }
-            var regionDto = new RegionDto
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl,
-            };
-            return Ok(regionDto);
+           
+                var regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+                if (regionDomain == null)
+                {
+                    return NotFound();
+                }
+                var regionDto = new RegionDto
+                {
+                    Id = regionDomain.Id,
+                    Code = regionDomain.Code,
+                    Name = regionDomain.Name,
+                    RegionImageUrl = regionDomain.RegionImageUrl,
+                };
+                return Ok(regionDto);     
         }
 
         [HttpPost]
          public IActionResult Create([FromBody] AddRegionRequestDto addRegionRequestDto)
          {
-            //Map or Convert DTO to Domain Model
-            var regionDomainModel = new Region
+        if (ModelState.IsValid)
+        {
+        //Map or Convert DTO to Domain Model
+        var regionDomainModel = new Region
             {
                 Code = addRegionRequestDto.Code,
                 Name = addRegionRequestDto.Name,
@@ -80,7 +83,12 @@ namespace NZWalks.API.Controllers
             };
 
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id  }, regionDto);
-         }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpPut]
         [Route("{id:Guid}")]
