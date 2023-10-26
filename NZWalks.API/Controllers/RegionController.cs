@@ -9,7 +9,8 @@ using NZWalks.API.Models.Dto;
 
 namespace NZWalks.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class RegionController : ControllerBase
     {
         private readonly NZWalksDbContext _dbContext;
