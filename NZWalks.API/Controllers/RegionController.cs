@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
@@ -11,6 +12,8 @@ using NZWalks.API.Repositories;
 namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class RegionController : ControllerBase
     {
         private readonly NZWalksDbContext _dbContext;
