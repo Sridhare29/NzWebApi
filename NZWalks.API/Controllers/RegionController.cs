@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.Dto;
+using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
 {
@@ -13,15 +14,18 @@ namespace NZWalks.API.Controllers
     public class RegionController : ControllerBase
     {
         private readonly NZWalksDbContext _dbContext;
+        private readonly IRegionRepositories regionRepositories;
 
-        public RegionController(NZWalksDbContext dbContext)
+        public RegionController(NZWalksDbContext dbContext, IRegionRepositories regionRepositories)
         {
-            _dbContext = dbContext;
+            this._dbContext = dbContext;
+            this.regionRepositories = regionRepositories;
         }
+
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var regionsDomain = _dbContext.Regions.ToList();
+            var regionsDomain = await regionRepositories.GetAllAsync();
 
             var regionDto = new List<RegionDto>();
             foreach(var regionDomain in regionsDomain)
@@ -39,10 +43,10 @@ namespace NZWalks.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        public IActionResult GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-           
-                var regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+            var regionDomain = await regionRepositories.GetById(id);
                 if (regionDomain == null)
                 {
                     return NotFound();
