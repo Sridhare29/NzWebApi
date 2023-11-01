@@ -9,6 +9,10 @@ namespace NZWalks.API.Data
 		public NzWalksAuthDbContext(DbContextOptions<NzWalksAuthDbContext> options) : base(options)
 		{
 		}
-	}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+    }
 }
 
