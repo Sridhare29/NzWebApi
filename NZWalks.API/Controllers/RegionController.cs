@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Data;
@@ -17,10 +18,11 @@ namespace NZWalks.API.Controllers
     public class RegionController : ControllerBase
     {
         private readonly IRegionRepositories regionRepositories;
-
-        public RegionController(IRegionRepositories regionRepositories)
+        private readonly IMapper _mapper;
+        public RegionController(IRegionRepositories regionRepositories,IMapper mapper)
         {
             this.regionRepositories = regionRepositories;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -28,17 +30,20 @@ namespace NZWalks.API.Controllers
         {
             var regionsDomain = await regionRepositories.GetAllAsync();
 
-            var regionDto = new List<RegionDto>();
-            foreach(var regionDomain in regionsDomain)
-            {
-                regionDto.Add(new RegionDto()
-                {
-                    Id = regionDomain.Id,
-                    Code = regionDomain.Code,
-                    Name = regionDomain.Name,
-                    RegionImageUrl = regionDomain.RegionImageUrl,
-                });
-            }
+            //var regionDto = new List<RegionDto>();
+            //foreach(var regionDomain in regionsDomain)
+            //{
+            //    regionDto.Add(new RegionDto()
+            //    {
+            //        Id = regionDomain.Id,
+            //        Code = regionDomain.Code,
+            //        Name = regionDomain.Name,
+            //        RegionImageUrl = regionDomain.RegionImageUrl,
+            //    });
+            //}
+            //AutoMapper
+            var regionDto = _mapper.Map<List<RegionDto>>(regionsDomain);
+
             return Ok(regionDto);
         }
 
