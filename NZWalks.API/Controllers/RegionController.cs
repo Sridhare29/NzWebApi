@@ -16,12 +16,10 @@ namespace NZWalks.API.Controllers
     //[Authorize]
     public class RegionController : ControllerBase
     {
-        private readonly NZWalksDbContext _dbContext;
         private readonly IRegionRepositories regionRepositories;
 
-        public RegionController(NZWalksDbContext dbContext, IRegionRepositories regionRepositories)
+        public RegionController(IRegionRepositories regionRepositories)
         {
-            this._dbContext = dbContext;
             this.regionRepositories = regionRepositories;
         }
 
@@ -121,7 +119,6 @@ namespace NZWalks.API.Controllers
                 regionsDomainModel.Name = updateRegionRequestDto.Name;
                 regionsDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
 
-                _dbContext.SaveChanges();
 
                 //Convert DomainModel to Dto
                 var regionDto = new RegionDto
