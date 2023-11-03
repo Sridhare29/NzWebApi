@@ -21,6 +21,7 @@ namespace NZWalks.API.Data
             base.OnModelCreating(modelBuilder);
 
             //seed data for Difficulties
+            //Easy,Medium & Hard
             var difficulties = new List<Difficulty>()
             {
                 new Difficulty
@@ -43,7 +44,7 @@ namespace NZWalks.API.Data
             modelBuilder.Entity<Difficulty>().HasData(difficulties);
 
             //seed data for Regions
-            var regions = new List<Region>()
+        var regions = new List<Region>()
         {
             new Region
             {
