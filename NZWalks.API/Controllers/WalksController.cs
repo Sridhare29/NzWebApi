@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Mapper;
 using NZWalks.API.Models.Domain;
+using NZWalks.API.Models.Dto.DifficultyDto;
 using NZWalks.API.Models.Dto.WalksDto;
 using NZWalks.API.Repositories.WalkRepos;
 

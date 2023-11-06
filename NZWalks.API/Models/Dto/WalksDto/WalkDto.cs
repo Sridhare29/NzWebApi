@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NZWalks.API.Models.Dto.WalksDto
+namespace NZWalks.API.Models.Dto.DifficultyDto
 {
 	public class WalkDto
 	{
@@ -13,9 +13,9 @@ namespace NZWalks.API.Models.Dto.WalksDto
 
         public String? WalkImageUrl { get; set; }
 
-        public Guid DifficultyId { get; set; }
+        public RegionDto Region { get; set; }
 
-        public Guid RegionId { get; set; }
+        public DifficultyDto Difficulty { get; set; }
     }
 }
 
