@@ -37,6 +37,8 @@
     <None Remove="Repositories\" />
     <None Remove="Models\Dto\WalksDto\" />
     <None Remove="Mapper\" />
+    <None Remove="Repositories\RegionRepos\" />
+    <None Remove="Repositories\WalkRepos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -47,5 +49,7 @@
     <Folder Include="Repositories\" />
     <Folder Include="Models\Dto\WalksDto\" />
     <Folder Include="Mapper\" />
+    <Folder Include="Repositories\RegionRepos\" />
+    <Folder Include="Repositories\WalkRepos\" />
   </ItemGroup>
 </Project>
