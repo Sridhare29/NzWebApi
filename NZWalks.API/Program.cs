@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using NZWalks.API.Data;
 using NZWalks.API.Mapper;
 using NZWalks.API.Repositories;
+using NZWalks.API.Repositories.WalkRepos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<NZWalksDbContext>(options => options.UseSqlServer(
 builder.Services.AddDbContext<NzWalksAuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksAuthConnection")));
 
 builder.Services.AddScoped<IRegionRepositories, SqlRegionRepository>();
+builder.Services.AddScoped<IWalkRepositories, SqlWalkRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {

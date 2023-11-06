@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Mapper;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.Dto.WalksDto;
+using NZWalks.API.Repositories.WalkRepos;
 
 namespace NZWalks.API.Controllers
 {
@@ -16,17 +17,36 @@ namespace NZWalks.API.Controllers
     public class WalksController : Controller
     {
         public readonly IMapper _autoMapper;
-        public WalksController(IMapper mapper)
+        public readonly IWalkRepositories _walkRepositories;
+
+        public WalksController(IMapper mapper, IWalkRepositories walkRepositories)
         {
             this._autoMapper = mapper;
+            this._walkRepositories = walkRepositories;
         }
+
+        //GET
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var walksDomainModel = await _walkRepositories.GetAllAsync();
+            //Map Dto to Domain Model
+
+            return Ok(_autoMapper.Map<List<Walk>>(walksDomainModel));
+        }
+
         //POST 
         [HttpPost]
         public async Task<IActionResult> create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
-            var walkDomainModel =  _autoMapper.Map<Walk>(addWalkRequestDto);
+            //Map Dto to Domain Model
+            var walkDomainModel = _autoMapper.Map<Walk>(addWalkRequestDto);
 
-            return Ok();
+            await _walkRepositories.CreateAsync(walkDomainModel);
+
+            //Map Domain Model to Dto
+
+            return Ok(_autoMapper.Map<WalkDto>(walkDomainModel));
         }
     }
 }
