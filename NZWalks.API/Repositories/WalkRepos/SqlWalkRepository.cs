@@ -33,7 +33,7 @@ namespace NZWalks.API.Repositories.WalkRepos
             return existingWalk;
         }
 
-        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
             var walks =  _nZWalksDb.Walks.Include("Difficulty").Include("Region").AsQueryable();
 
@@ -45,7 +45,25 @@ namespace NZWalks.API.Repositories.WalkRepos
                     walks = walks.Where(x => x.Name.Contains(filterQuery));
                 }
             }
-            return await walks.ToListAsync();
+
+            //Sorting
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if(sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+                else if(sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+            }
+
+            //Pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
             //Add the Naigation props for Difficulty & Region to get
             //return await _nZWalksDb.Walks.Include("Difficulty").Include("Region").ToListAsync();
         }
