@@ -9,7 +9,7 @@ namespace NZWalks.API.Models.Domain
 
         public String Description { get; set; }
 
-        public String LengthInKm { get; set; }
+        public double LengthInKm { get; set; }
 
         public String? WalkImageUrl { get; set; }
 

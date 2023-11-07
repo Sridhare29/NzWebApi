@@ -9,7 +9,7 @@ namespace NZWalks.API.Models.Dto.DifficultyDto
 
         public String Description { get; set; }
 
-        public String LengthInKm { get; set; }
+        public double LengthInKm { get; set; }
 
         public String? WalkImageUrl { get; set; }
 

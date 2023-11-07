@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NZWalks.API.Migrations
 {
     /// <inheritdoc />
-    public partial class seedingdataforDifficulitiesandregions : Migration
+    public partial class NewMigrationName : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,11 +21,11 @@ namespace NZWalks.API.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.AlterColumn<double>(
                 name: "LengthInKm",
                 table: "Walks",
-                type: "nvarchar(max)",
-                nullable: true,
+                type: "float",
+                nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -148,10 +148,8 @@ namespace NZWalks.API.Migrations
                 table: "Walks",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldClrType: typeof(double),
+                oldType: "float");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",

@@ -127,8 +127,8 @@ namespace NZWalks.API.Migrations
                     b.Property<Guid>("DifficultyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LengthInKm")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("LengthInKm")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
