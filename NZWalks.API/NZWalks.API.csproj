@@ -40,6 +40,7 @@
     <None Remove="Repositories\RegionRepos\" />
     <None Remove="Repositories\WalkRepos\" />
     <None Remove="Models\Dto\DifficultyDto\" />
+    <None Remove="Models\Dto\AuthModelDto\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -53,5 +54,6 @@
     <Folder Include="Repositories\RegionRepos\" />
     <Folder Include="Repositories\WalkRepos\" />
     <Folder Include="Models\Dto\DifficultyDto\" />
+    <Folder Include="Models\Dto\AuthModelDto\" />
   </ItemGroup>
 </Project>
