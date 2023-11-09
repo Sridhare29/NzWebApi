@@ -41,6 +41,7 @@
     <None Remove="Repositories\WalkRepos\" />
     <None Remove="Models\Dto\DifficultyDto\" />
     <None Remove="Models\Dto\AuthModelDto\" />
+    <None Remove="Repositories\TokenReopos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -55,5 +56,6 @@
     <Folder Include="Repositories\WalkRepos\" />
     <Folder Include="Models\Dto\DifficultyDto\" />
     <Folder Include="Models\Dto\AuthModelDto\" />
+    <Folder Include="Repositories\TokenReopos\" />
   </ItemGroup>
 </Project>

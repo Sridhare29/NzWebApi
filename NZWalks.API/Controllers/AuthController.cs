@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.Dto.AuthModelDto;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using NZWalks.API.Repositories.TokenReopos;
 
 namespace NZWalks.API.Controllers
 {
@@ -15,10 +14,12 @@ namespace NZWalks.API.Controllers
     public class AuthController : Controller
     {
         public readonly UserManager<IdentityUser> _userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager,ITokenRepository tokenRepository)
         {
             this._userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
         // POST: api/Auth/Register
         [HttpPost]
@@ -60,8 +61,20 @@ namespace NZWalks.API.Controllers
 
                 if (checkPasswordResult)
                 {
-                    //create token
-                    return Ok();
+                    //Get Roles for this user
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if(roles != null)
+                    {
+                        //create token
+                       var jwtToken = tokenRepository.CreateJWTToken(user,roles.ToList());
+
+                        var response = new LoginResponseDto
+                        {
+                            JwtToken = jwtToken
+                        };
+                        return Ok(response);
+                    }
+                    
                 }
             }
             return BadRequest("Username or password incorrect");
